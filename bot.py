@@ -1,21 +1,45 @@
+# ===== FREE WEB SERVICE HACK + ALGO BOT =====
+
+from flask import Flask
+import threading
+import os
 import ccxt
 import pandas as pd
 import numpy as np
 import time
 
+# ---------- FLASK (Fake Web Server for Render Free) ----------
+app = Flask(__name__)
+
+@app.route("/")
+def home():
+    return "Algo bot is running"
+
+def run_web():
+    app.run(host="0.0.0.0", port=10000)
+
+# ---------- START WEB SERVER THREAD ----------
+threading.Thread(target=run_web).start()
+
+# ---------- DELTA EXCHANGE CONNECTION (SAFE WAY) ----------
 exchange = ccxt.delta({
-    "apiKey": "HOepFWatHvK315mkXnS5GsnmNO1bg6",
-    "secret": "R5aWJ4Broa50pUjO9GF0K6gImKTbYG3SqSKRpie8fmMDX3SatyjtaX0Co49v"
+    "apiKey": os.environ.get("DELTA_API_KEY"),
+    "secret": os.environ.get("DELTA_API_SECRET")
 })
 
 symbol = "ETH/USDT"
 timeframe = "5m"
 
+# ---------- MARKET DATA ----------
 def get_data():
     bars = exchange.fetch_ohlcv(symbol, timeframe, limit=100)
-    df = pd.DataFrame(bars, columns=["time","open","high","low","close","volume"])
+    df = pd.DataFrame(
+        bars,
+        columns=["time", "open", "high", "low", "close", "volume"]
+    )
     return df
 
+# ---------- INDICATORS ----------
 def indicators(df):
     # EMA
     df["ema9"] = df["close"].ewm(span=9).mean()
@@ -38,6 +62,7 @@ def indicators(df):
 
     return df
 
+# ---------- STRATEGY ----------
 def strategy(df):
     last = df.iloc[-1]
 
@@ -57,6 +82,7 @@ def strategy(df):
 
     return None
 
+# ---------- MAIN LOOP ----------
 while True:
     df = indicators(get_data())
     signal = strategy(df)
