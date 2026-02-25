@@ -4,8 +4,8 @@ import numpy as np
 import time
 
 exchange = ccxt.delta({
-    'apiKey': HOepFWatHvK315mkXnS5GsnmNO1bg6
-    'secret': R5aWJ4Broa50pUjO9GF0K6gImKTbYG3SqSKRpie8fmMDX3SatyjtaX0Co49v
+    "apiKey": "HOepFWatHvK315mkXnS5GsnmNO1bg6",
+    "secret": "R5aWJ4Broa50pUjO9GF0K6gImKTbYG3SqSKRpie8fmMDX3SatyjtaX0Co49v"
 })
 
 symbol = "ETH/USDT"
