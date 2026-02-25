@@ -22,9 +22,11 @@ def run_web():
 threading.Thread(target=run_web).start()
 
 # ---------- DELTA EXCHANGE CONNECTION (SAFE WAY) ----------
+import os
+
 exchange = ccxt.delta({
-    "apiKey": HOepFWatHvK315mkXnS5GsnmNO1bg6,
-    "secret": R5aWJ4Broa50pUjO9GF0K6gImKTbYG3SqSKRpie8fmMDX3SatyjtaX0Co49v
+    "apiKey": os.environ.get("DELTA_API_KEY"),
+    "secret": os.environ.get("DELTA_API_SECRET")
 })
 
 symbol = "ETH/USDT"
