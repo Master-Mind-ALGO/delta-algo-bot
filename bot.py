@@ -58,3 +58,7 @@ while True:
         print("Signal:", signal)
 
     time.sleep(300)
+
+
+Api key :- 1dKqSxL3qm1z0hii18OWPQJmR7er2y
+Api secret :- Bfd3eEQJLDfE0AaaNXXPKBSsPTU8nf8JGRqrQSM4p1547zhhDqUsSbaI5u6T
