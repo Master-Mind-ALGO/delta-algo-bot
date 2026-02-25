@@ -1,11 +1,14 @@
+import warnings
+warnings.filterwarnings("ignore")
+
 import ccxt
 import pandas as pd
 import pandas_ta as ta
 import time
 
 exchange = ccxt.delta({
-    'apiKey': 'API_KEY_YAHAN_DALO',
-    'secret': 'API_SECRET_YAHAN_DALO'
+    'apiKey': HOepFWatHvK315mkXnS5GsnmNO1bg6
+    'secret': R5aWJ4Broa50pUjO9GF0K6gImKTbYG3SqSKRpie8fmMDX3SatyjtaX0Co49v
 })
 
 symbol = 'ETH/USDT'
@@ -22,11 +25,11 @@ def apply_indicators(df):
     df['ema20'] = ta.ema(df['close'], length=20)
 
     st = ta.supertrend(df['high'], df['low'], df['close'], length=10, multiplier=3)
-    df['supertrend'] = st['SUPERT_10_3.0']
+    df['supertrend'] = st.iloc[:, 0]
 
-    bb = ta.bbands(df['close'], length=20)
-    df['bb_upper'] = bb['BBU_20_2.0']
-    df['bb_lower'] = bb['BBL_20_2.0']
+ bb = ta.bbands(df['close'], length=20, std=2)
+df['bb_upper'] = bb.iloc[:, 0]
+df['bb_lower'] = bb.iloc[:, 2]
 
     return df
 
@@ -58,7 +61,3 @@ while True:
         print("Signal:", signal)
 
     time.sleep(300)
-
-
-Api key :- 1dKqSxL3qm1z0hii18OWPQJmR7er2y
-Api secret :- Bfd3eEQJLDfE0AaaNXXPKBSsPTU8nf8JGRqrQSM4p1547zhhDqUsSbaI5u6T
